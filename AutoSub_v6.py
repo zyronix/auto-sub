@@ -23,8 +23,8 @@ rootpath = "/mnt/nas1/content/TV"
 # Set this to True if you also want the script to download the ENG version of the NLD is not available
 # the english version will be named filename.eng.srt
 fallbackToEng = True
-# API key (fill in your API key here)
-apikey = "0000000000000000"
+# API key
+apikey = "AFC34E2C2FE8B9F7"
 
 #/Settings ---------------------------------------------------------------------
 
