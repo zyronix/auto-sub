@@ -32,6 +32,7 @@ api = "http://api.bierdopje.com/%s/" %apikey
 showid_cache = {}
 
 def ProcessFile(file):
+	print file, "start processing file name" 
 	if re.search('[sS][0-9][0-9][eE][0-9][0-9]', file): 
 		#s01e05
 		result = re.search('[sS][0-9][0-9][eE][0-9][0-9]', file)
@@ -90,17 +91,20 @@ def ProcessFile(file):
 			episode = episodeid[3]
 		if not episodeid[2] == "0":
 			episode = episodeid[2] + episodeid[2]
+	try:
+		title = file[:episodeidstart]
+		title = str.replace(title,"."," ")
+		title = str.replace(title,"-"," ")
+		title = str.replace(title," -","")
+		title = str.replace(title,"- ","")
+		title = title.rstrip()
+		title = title.lstrip()
+		title = str.title(title)
 	
-	title = file[:episodeidstart]
-	title = str.replace(title,"."," ")
-	title = str.replace(title,"-"," ")
-	title = str.replace(title," -","")
-	title = str.replace(title,"- ","")
-	title = title.rstrip()
-	title = title.lstrip()
-	title = str.title(title)
-	
-	return title, season, episode, episodeid
+		return title, season, episode, episodeid
+	except:
+		print file, "error could not processfile name"
+		exit()
 
 	
 def getShowid(showName):
@@ -154,7 +158,7 @@ while True:
 				engsrtfile = os.path.join(filename[:-4] + ".eng.srt") 
 				
 				if not os.path.exists(os.path.join(dirname,srtfile)):
-					#print filename, "Does not yet have a srt file."
+					print filename, "Does not yet have a srt file."
 					title, season, episode, episodeid = ProcessFile(filename)
 					
 					if title in showid_cache.keys():
