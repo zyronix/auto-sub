@@ -9,8 +9,6 @@
 import urllib
 import urllib2
 import os
-import sys
-import getopt
 import time
 import re
 from xml.dom import minidom
