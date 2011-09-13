@@ -103,7 +103,7 @@ def nameMapping(showName):
 def SkipShow(showName,season,episode):
 	if showName.upper() in Properties.skipshowupper.keys():
 		log.debug("SkipShow: Found %s in skipshow dictonary" %showName)
-		for seasontmp in skipshowupper[showName.upper()]:
+		for seasontmp in Properties.skipshowupper[showName.upper()]:
 			if seasontmp == '0':
 				log.debug("SkipShow: variable of %s is set to 0, skipping the complete Serie" %showName)
 				return True
