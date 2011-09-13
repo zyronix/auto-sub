@@ -141,10 +141,10 @@ def checkRSS(wantedQueue, toDownloadQueue):
 			if 'releasegrp' in wantedItem.keys(): wantedItemreleasegrp = wantedItem['releasegrp']
 			if 'source' in wantedItem.keys(): wantedItemsource = wantedItem['source']
 			
-			if wantedItemtitle in showid_cache.keys():
-				showid = showid_cache[wantedItemtitle]
+			if wantedItemtitle in Config.Properties.showid_cache.keys():
+				showid = Config.Properties.showid_cache[wantedItemtitle]
 			
-			if not wantedItemtitle in showid_cache.keys():
+			if not wantedItemtitle in Config.Properties.showid_cache.keys():
 				showid = getShowid(wantedItemtitle)
 				if not showid: 
 					log.debug("checkRSS: Could not be found on bierdopje.com for %s, trying the namemapping" %wantedItemtitle)
@@ -152,7 +152,7 @@ def checkRSS(wantedQueue, toDownloadQueue):
 					if not showid:
 						log.error("checkRSS: Could not find a show ID for %s" %wantedItemtitle)
 						continue
-				showid_cache[wantedItemtitle] = showid
+				Config.Properties.showid_cache[wantedItemtitle] = showid
 			
 			for normalizedRssTitle in normalizedRssTitleList:
 				toDownloadItem = None
@@ -205,6 +205,7 @@ def checkRSS(wantedQueue, toDownloadQueue):
 						toDownloadQueue.append(wantedItem)
 						log.info("checkRSS: The episode %s - Season %s Episode %s has a matching subtitle on bierdopje, adding to toDownloadQueue" %(wantedItemtitle, wantedItemseason,wantedItemepisode))
 						toDelete_wantedQueue.append(index)
+						break
 	
 	i=len(toDelete_wantedQueue)-1
 	while i >= 0: 

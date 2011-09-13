@@ -94,9 +94,9 @@ class Properties():
 			"Hawaii Five 0":"14211"
 	}
 	
-
 def nameMapping(showName):
-	if showName in Properties.namemapping.keys():
+	namemappingupper = [x.upper() for x in Properties.namemapping.keys()]
+	if showName.upper() in namemappingupper:
 		log.debug("nameMapping: found match for %s" %showName)
 		return Properties.namemapping[showName]
 		

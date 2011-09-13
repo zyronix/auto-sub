@@ -91,6 +91,7 @@ def main(argv=None):
 	#initial scan&check
 	wantedQueue = LocalDisk.scanDir(config.rootpath)
 	wantedQueue, toDownloadQueue = Bierdopje.checkSub(wantedQueue, toDownloadQueue)
+	wantedQueue, toDownloadQueue = Bierdopje.checkRSS(wantedQueue, toDownloadQueue)
 	
 	# take timestamps
 	ts_scanDir = time.time()

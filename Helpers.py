@@ -19,6 +19,7 @@ REGEXES = [
 		re.compile("^(?P<title>.+?)[. _-]+(?P<season>\d{1,2})(?P<episode>\d{2})([. _-]*(?P<quality>(1080|720))*[pi]*[. _-]*(?P<source>(hdtv|dvdrip|bdrip|blu[e]*ray|web[. _-]*dl))*[. _]*(?P<extra_info>.+?)((?<![. _-])-(?P<releasegrp>[^-]+))?)?$",re.IGNORECASE)
 		]
 QUALITY_PARSER = re.compile("(hdtv|dvdrip|bdrip|blu[e]*ray|web[. _-]*dl)",re.IGNORECASE)
+
 def CleanSerieName(series_name):
 	"""Cleans up series name by removing any . and _
     characters, along with any trailing hyphens.
@@ -51,7 +52,8 @@ def ProcessFileName(file):
 	quality = None 			#quality, can either be 1080, 720 or SD
 	releasegrp = None 		#The Release group
 	source = None 			#The source, can either be hdtv, dvdrip, bdrip, blueray or web-dl
-
+	matchdic = {}
+	
 	file = file.lower()
 	filesplit = os.path.splitext(file)[0] #remove the file extension
 	# Try to determine the TV Episode information
@@ -64,19 +66,14 @@ def ProcessFileName(file):
 		except AttributeError:
 			continue
 	#Trying to set all the main attributes			
-	try:
-		title = CleanSerieName(matchdic["title"])
-		season = matchdic["season"]
-		episode = matchdic["episode"]
+	if 'title' in matchdic.keys(): title = CleanSerieName(matchdic["title"])
+	if 'season' in matchdic.keys(): season = matchdic["season"]
+	if 'episode' in matchdic.keys(): episode = matchdic["episode"]
+	if 'source' in matchdic.keys(): 
 		source =  matchdic["source"]
-		if source != None:
-			source = re.sub("[. _-]", "-", source)  
-		releasegrp = matchdic["releasegrp"]
-		quality = matchdic["quality"]
-	except KeyError:
-		log.error("ProcessFileName: can't get variables from dictionary!")
-	except :
-		log.error("ProcessFileName: can't get variables from dictionary!")
+		#source = re.sub("[. _-]", "-", source)  
+	if 'releasegrp' in matchdic.keys(): releasegrp = matchdic["releasegrp"]
+	if 'quality' in matchdic.keys(): quality = matchdic["quality"]
 
 	# Fallback for the quality and source mkv files and mp4 are most likely HD quality
 	# Other files are more likely sd quality
@@ -126,6 +123,4 @@ def matchQuality(quality, item):
 	elif quality == "720" and re.search('720', item):
 		log.debug("matchQuality: Quality is 720 matched to %s" %item)
 		return 1
-
-
 		
