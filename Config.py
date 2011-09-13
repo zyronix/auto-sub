@@ -94,10 +94,6 @@ class Properties():
 			"Hawaii Five 0":"14211"
 	}
 	
-def update_showid_cache(new_cache=None):
-	showid_cache = new_cache
-	del new_cache
-	return True
 
 def nameMapping(showName):
 	if showName in Properties.namemapping.keys():
