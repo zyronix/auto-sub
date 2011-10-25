@@ -114,7 +114,7 @@ def checkRSS(wantedQueue, toDownloadQueue):
 		req.close()
 	except:  
 		log.error("getSubLink: The server returned an error for request %s" %rssUrl)
-		return None
+		return wantedQueue, toDownloadQueue
 	
 	if not dom or len(dom.getElementsByTagName('result')) == 0:
 		rssTitleList = dom.getElementsByTagName('title')
