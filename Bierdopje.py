@@ -148,7 +148,7 @@ def checkRSS(wantedQueue, toDownloadQueue):
 				showid = getShowid(wantedItemtitle)
 				if not showid: 
 					log.debug("checkRSS: Could not be found on bierdopje.com for %s, trying the namemapping" %wantedItemtitle)
-					showid = nameMapping(wantedItemtitle)
+					showid = Config.nameMapping(wantedItemtitle)
 					if not showid:
 						log.error("checkRSS: Could not find a show ID for %s" %wantedItemtitle)
 						continue
