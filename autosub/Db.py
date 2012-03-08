@@ -70,6 +70,10 @@ class lastDown():
         connection=sqlite3.connect(autosub.DBFILE)
         cursor=connection.cursor()
         Ldict = data['dict']
+        
+        if not 'source' in Ldict.keys():
+            Ldict['source'] = None
+        
         cursor.execute(self.query_set,[ 
                        Ldict['title'],
                        Ldict['season'],
