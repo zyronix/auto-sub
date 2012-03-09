@@ -43,6 +43,20 @@ def daemon():
     sys.stdout.flush()
     sys.stderr.flush()
 
+def launchBrowser():
+    host = autosub.WEBSERVERIP
+    port = autosub.WEBSERVERPORT
+    if host == '0.0.0.0':
+        host = 'localhost'
+
+    url = 'http://%s:%d' % (host, int(port))
+    try:
+        webbrowser.open(url, 2, 1)
+    except:
+        try:
+            webbrowser.open(url, 1, 1)
+        except:
+            log.error('launchBrowser: Failed')
 
 def start():
     # Only use authentication in CherryPy is a username and password is set by the user
@@ -84,7 +98,10 @@ def start():
         os._exit(1)
 
     cherrypy.server.wait()
-
+    
+    if autosub.LAUNCHBROWSER:
+        launchBrowser()
+    
     log.info("AutoSub: Starting wipStatus thread")
     autosub.WIPSTATUS = autosub.Scheduler.Scheduler(autosub.wipStatus.wipStatus(), autosub.SCHEDULERWIPSTATUS, True, "WIPSTATUS")
     autosub.WIPSTATUS.thread.start()
@@ -135,21 +152,6 @@ def stop():
     cherrypy.engine.exit()
 
     os._exit(0)
-
-def launchBrowser():
-    host = autosub.WEBSERVERIP
-    port = autosub.WEBSERVERPORT
-    if host == '0.0.0.0':
-        host = 'localhost'
-
-    url = 'http://%s:%d' % (host, int(port))
-    try:
-        webbrowser.open(url, 2, 1)
-    except:
-        try:
-            webbrowser.open(url, 1, 1)
-        except:
-            log.error('launchBrowser: Failed')
 
 def signal_handler(signum, frame):
     log.debug("AutoSub: got signal. Shutting down")

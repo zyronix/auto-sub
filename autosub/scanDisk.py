@@ -33,6 +33,14 @@ class scanDisk():
             exit()
 
         for dirname, dirnames, filenames in os.walk(os.path.join(autosub.ROOTPATH)):
+            if re.search('_unpack_', dirname, re.IGNORECASE): 
+                log.debug("scanDisk: found a unpack directory, skipping")
+                continue
+            
+            if re.search('_failed_', dirname, re.IGNORECASE): 
+                log.debug("scanDisk: found a failed directory, skipping")
+                continue
+            
             for filename in filenames:
                 splitname = filename.split(".")
                 ext = splitname[len(splitname) - 1]

@@ -95,9 +95,6 @@ def main(argv=None):
     log.info("AutoSub: Starting threads")
     autosub.AutoSub.start()
     
-    if autosub.LAUNCHBROWSER:
-        autosub.AutoSub.launchBrowser()
-    
     log.info("AutoSub: threads started, going into a loop to keep the main thread going")
     
     while True:

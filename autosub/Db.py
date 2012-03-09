@@ -103,7 +103,7 @@ def initDatabase():
         connection=sqlite3.connect(dbFile)
         cursor=connection.cursor()
         
-        cursor.execute("CREATE TABLE id_cache (bierdopje_id INTEGER PRIMARY KEY, show_name TEXT);")
+        cursor.execute("CREATE TABLE id_cache (bierdopje_id INTEGER, show_name TEXT);")
         cursor.execute("CREATE TABLE last_downloads (id INTEGER PRIMARY KEY, show_name TEXT, season TEXT, episode TEXT, quality TEXT, source TEXT, language TEXT);")
             
         #create the tables 

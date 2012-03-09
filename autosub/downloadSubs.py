@@ -7,13 +7,11 @@ import logging
 import urllib2
 
 import autosub
-import socket
+import os
 
 from autosub.Db import lastDown
 
 log = logging.getLogger('thelogger')
-
-socket.setdefaulttimeout(autosub.TIMEOUT)
 
 class downloadSubs():
     """
@@ -41,16 +39,29 @@ class downloadSubs():
                     try:
                         req = urllib2.Request(downloadLink)
                         req.add_header("User-agent", autosub.USERAGENT) 
+                        log.debug("downloadSubs: Trying to download the following subtitle %s" %downloadLink)
                         response = urllib2.urlopen(req,None,autosub.TIMEOUT)
+                        autosub.Helpers.checkAPICalls(use=True)
                     except:
                         log.error("downloadSubs: The server returned an error for request %s" % downloadLink)
                         continue
-
+                    
+                    destdir = os.path.split(destsrt)[0]
+                    if not os.path.exists(destdir):
+                        toDelete_toDownloadQueue.append(index)
+                        log.debug("checkSubs: no destination directory %s" %destdir)
+                        continue
+                    elif not os.path.lexists(destdir):
+                        log.debug("checkSubs: no destination directory %s" %destdir)
+                        toDelete_toDownloadQueue.append(index)
+                        continue
+                    
                     try:
                         open(destsrt, 'w').write(response.read())
                         response.close()
                     except:
                         log.error("downloadSubs: Error while writing subtitle file. Destination: %s" % destsrt)
+                        toDelete_toDownloadQueue.append(index)
                         continue
 
                     log.info("downloadSubs: DOWNLOADED: %s" % destsrt)

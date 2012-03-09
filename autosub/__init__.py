@@ -90,8 +90,8 @@ def Initialize():
     TODOWNLOADQUEUE = []
     WANTEDQUEUE = []
 
-    NLRSSURL = "http://www.bierdopje.com/rss/subs/nl"
-    ENRSSURL = "http://www.bierdopje.com/rss/subs/en"
+    NLRSSURL = "http://feeds.bierdopje.com/bierdopje/subs/dutch"
+    ENRSSURL = "http://feeds.bierdopje.com/bierdopje/subs/english"
     APIKEY = "BB442E7744E9B541"
     WIPURL = "http://www.bierdopje.com/wip/overview"
     TIMEOUT = 30
