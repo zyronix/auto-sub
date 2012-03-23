@@ -73,6 +73,10 @@ def start():
                            })
     
     conf = {
+            '/' : {
+            'tools.encode.encoding': 'utf-8',
+            'tools.decode.encoding': 'utf-8'
+            },
             '/media':{
             'tools.staticdir.on': True,
             'tools.staticdir.root': os.path.join(autosub.PATH, 'interface/'),
@@ -82,7 +86,8 @@ def start():
         },
             '/favicon.ico':{
             'tools.staticfile.on' : True,
-            'tools.staticfile.filename' : os.path.join(autosub.PATH, 'interface/media/images/favicon.ico')}
+            'tools.staticfile.filename' : os.path.join(autosub.PATH, 'interface/media/images/favicon.ico')
+        }    
         }
     
     cherrypy.tree.mount(autosub.WebServer.WebServerInit(),config = conf)

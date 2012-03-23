@@ -1,4 +1,5 @@
 import cherrypy
+
 try:
     from Cheetah.Template import Template
 except:
@@ -128,7 +129,9 @@ class Home:
     
     @cherrypy.expose
     def runNow(self):
+        #time.sleep is here to prevent a timing issue, where checksub is runned before scandisk
         autosub.SCANDISK.runnow = True
+        time.sleep(5)
         autosub.CHECKRSS.runnow = True
         autosub.CHECKSUB.runnow = True
         autosub.DOWNLOADSUBS.runnow = True

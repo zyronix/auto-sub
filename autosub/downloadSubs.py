@@ -57,10 +57,10 @@ class downloadSubs():
                         continue
                     
                     try:
-                        open(destsrt, 'w').write(response.read())
+                        open(destsrt, 'wb').write(response.read())
                         response.close()
                     except:
-                        log.error("downloadSubs: Error while writing subtitle file. Destination: %s" % destsrt)
+                        log.error("downloadSubs: Error while writing subtitle file. Check if the destination is writeable! Destination: %s" % destsrt)
                         toDelete_toDownloadQueue.append(index)
                         continue
 

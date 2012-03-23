@@ -63,7 +63,6 @@ DAEMON=None
 
 DBFILE=None
 
-VERSION=None
 VERSIONURL=None
 USERAGENT=None
 
@@ -78,13 +77,15 @@ def Initialize():
     SCHEDULERSCANDISK, SCHEDULERCHECKSUB, SCHEDULERCHECKRSS, SCHEDULERDOWNLOADSUBS, \
     DAEMON, \
     DBFILE, \
-    VERSION, USERAGENT, VERSIONURL
+    USERAGENT, VERSIONURL
     
     DBFILE = 'database.db'
     
-    VERSION = autosubversion
+    release = autosubversion.split(' ')[0]
+    versionnumber = autosubversion.split(' ')[1]
+    
     VERSIONURL = 'http://auto-sub.googlecode.com/hg/autosub/version.py'
-    USERAGENT = 'Auto-Sub ' + VERSION
+    USERAGENT = 'auto-sub/' + versionnumber + release.lower()[0]
     
     TODOWNLOADQUEUE = []
     WANTEDQUEUE = []

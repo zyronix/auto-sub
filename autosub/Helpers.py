@@ -9,8 +9,9 @@ import subprocess
 from string import capwords
 import time
 import urllib2
-import re
-from distutils import version
+#from distutils import version
+from library import version
+from autosub.version import autosubversion
 
 import autosub
 
@@ -56,8 +57,8 @@ def CheckVersion():
     release = version_online.split(' ')[0]
     versionnumber = version.StrictVersion(version_online.split(' ')[1])
     
-    running_release = autosub.VERSION.split(' ')[0]
-    running_versionnumber = version.StrictVersion(autosub.VERSION.split(' ')[1])
+    running_release = autosubversion.split(' ')[0]
+    running_versionnumber = version.StrictVersion(autosubversion.split(' ')[1])
     
     if release == running_release:
         if versionnumber > running_versionnumber:
