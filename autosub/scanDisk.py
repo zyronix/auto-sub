@@ -10,6 +10,7 @@ import re
 # Autosub specific modules
 import autosub
 import autosub.Helpers
+from autosub.ProcessFilename import ProcessFilename
 # Settings
 log = logging.getLogger('thelogger')
 
@@ -59,7 +60,7 @@ class scanDisk():
                     if not os.path.exists(os.path.join(dirname, srtfile)) or (not os.path.exists(os.path.join(dirname, srtfileeng)) and autosub.DOWNLOADENG):
                         log.debug("scanDir: File %s is missing a subtitle" % filename)
                         lang = []
-                        filenameResults = autosub.Helpers.ProcessFileName(os.path.splitext(filename)[0], os.path.splitext(filename)[1])
+                        filenameResults = ProcessFilename(os.path.splitext(filename)[0], os.path.splitext(filename)[1])
                         if 'title' in filenameResults.keys():
                             if 'season' in filenameResults.keys():
                                 if 'episode' in filenameResults.keys():

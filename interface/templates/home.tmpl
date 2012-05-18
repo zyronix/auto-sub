@@ -43,13 +43,13 @@
 	<td width="100px" align="center">$var['season']</td>
 	<td width="100px" align="center">$var['episode']</td>
 
-#if 'quality' in $var.keys()
+#if $var['quality']:
 	<td width="100px" align="center">$var['quality'].upper()</td>
 #else
 	<td width="100px" align="center">Unknown</td>
 #end if
 
-#if 'source' in $var.keys()
+#if $var['source']:
 	<td width="100px" align="center">$var['source'].upper()</td>
 #else
 	<td width="100px" align="center">Unknown</td>
@@ -114,7 +114,12 @@
 	<td width="500px"><b>$var['show_name']</b></td>
 	<td width="100px" align="center">$var['season']</td>
 	<td width="100px" align="center">$var['episode']</td>
-	<td width="100px" align="center">$var['quality']</td>
+	
+#if 'quality' in $var.keys()
+	<td width="100px" align="center">$var['quality'].upper()</td>
+#else
+	<td width="100px" align="center">Unknown</td>
+#end if
 
 #if $var['source']
 	<td width="100px" align="center">$var['source'].upper()</td>

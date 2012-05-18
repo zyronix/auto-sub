@@ -13,6 +13,7 @@ from library.beautifulsoup import BeautifulStoneSoup
 
 import autosub.Helpers
 from autosub.Bierdopje import API
+from autosub.ProcessFilename import ProcessFilename
 
 log = logging.getLogger('thelogger')
 
@@ -94,7 +95,7 @@ class checkRss():
                 link = item['link']
                 show_id = item['show_id']
                 log.debug("checkRSS: Normalizing the following entry in the RSS results: %s" % title)
-                normalizedRssTitle = autosub.Helpers.ProcessFileName(title,'')
+                normalizedRssTitle = ProcessFilename(title, '')
                 normalizedRssTitle['rssfile'] = title
                 normalizedRssTitle['link'] = link
                 normalizedRssTitle['show_id'] = str(show_id)
