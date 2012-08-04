@@ -221,17 +221,23 @@ class Home:
         return str(tmpl)
     
     @cherrypy.expose
-    def runNow(self):
-        #time.sleep is here to prevent a timing issue, where checksub is runned before scandisk
-        autosub.SCANDISK.runnow = True
-        time.sleep(5)
-        autosub.CHECKRSS.runnow = True
-        autosub.CHECKSUB.runnow = True
-        autosub.DOWNLOADSUBS.runnow = True
-        
-        tmpl = PageTemplate(file="interface/templates/message.tmpl")
-        tmpl.message = "Running everything! <br> <a href='/home'>Return</a>"
-        return str(tmpl)
+    def runNow(self, device = ''):
+			#time.sleep is here to prevent a timing issue, where checksub is runned before scandisk
+			autosub.SCANDISK.runnow = True
+			time.sleep(5)
+			autosub.CHECKRSS.runnow = True
+			autosub.CHECKSUB.runnow = True
+			autosub.DOWNLOADSUBS.runnow = True
+	
+			if device == 'mobile':
+				tmpl = PageTemplate(file="interface/templates/mobile/message.tmpl")
+				tmpl.message = "Running everything!"
+				
+			else:
+				tmpl = PageTemplate(file="interface/templates/message.tmpl")
+				tmpl.message = "Running everything! <br> <a href='/home'>Return</a>"
+			
+			return str(tmpl)
     
     @cherrypy.expose
     def resetAPICalls(self):
@@ -264,7 +270,13 @@ class Log:
         tmpl.message = result
         
         return str(tmpl)
-    
+
+class Mobile:
+    @cherrypy.expose
+    def index(self):
+        tmpl = PageTemplate(file="interface/templates/mobile/index.tmpl")
+        return str(tmpl)
+		
 class WebServerInit():
     @cherrypy.expose
     def index(self):
@@ -273,6 +285,7 @@ class WebServerInit():
     home = Home()
     config = Config()
     log = Log()
+    mobile = Mobile()
 
     def error_page_401(status, message, traceback, version):
         return "Error %s - Well, I'm very sorry but you don't have access to this resource!" % status
