@@ -231,7 +231,7 @@ class Home:
 	
 			if device == 'mobile':
 				tmpl = PageTemplate(file="interface/templates/mobile/message.tmpl")
-				tmpl.message = "Running everything!"
+				tmpl.message = "Searching for new subtitles!"
 				
 			else:
 				tmpl = PageTemplate(file="interface/templates/message.tmpl")
