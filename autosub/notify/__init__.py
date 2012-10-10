@@ -12,6 +12,7 @@ import autosub
 from autosub.notify import twitter
 from autosub.notify import mail
 from autosub.notify import nma
+from autosub.notify import growl
 
 log = logging.getLogger('thelogger')
 
@@ -31,6 +32,11 @@ def notifyTest(notifylib):
     if notifylib == 'nma':
         log.info("Notify: Sending test notification to android")
         return nma.test_notify()
+    
+    if notifylib == 'growl':
+        log.info("Notify: Testing and registering growl")
+        return growl.test_notify()
+    
 
 def notify(lang, subtitlefile, videofile):
     log.debug("Notify: Trying to send notifications. Language: %s Srt: %s Video: %s" %(lang, subtitlefile, videofile))
@@ -55,4 +61,8 @@ def notifySend(lang, subtitlefile, videofile):
     if autosub.NOTIFYNMA:
         log.debug("Notify: NMA is enabled")
         nma.send_notify(lang, subtitlefile, videofile)
+    
+    if autosub.NOTIFYGROWL:
+        log.debug("Notify: Growl is enabled")
+        growl.send_notify(lang, subtitlefile, videofile)
 
