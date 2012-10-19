@@ -73,10 +73,10 @@
 	<td width="50px" align="center">
 #for lang in $var['lang']
 #if lang == "nl"
-	<img src="/media/images/nl.png" alt="nl">
+	<img src="$autosub.WEBROOT/images/nl.png" alt="nl">
 #end if
 #if lang == "en"
-	<img src="/media/images/en.png" alt="en">
+	<img src="$autosub.WEBROOT/images/en.png" alt="en">
 #end if
 #end for
 	</td>
@@ -90,8 +90,8 @@
 #set $counter = $counter + 1
 <div id="dropdown-$counter" class="dropdown-menu has-tip">
     <ul>
-        <li><a href="/config/skipShow/$var['title']/$var['season']">Skip season $var['season']</a></li>
-        <li><a href="/config/skipShow/$var['title']/0">Skip show</a></li>
+        <li><a href="$autosub.WEBROOT/config/skipShow/$var['title']/$var['season']">Skip season $var['season']</a></li>
+        <li><a href="$autosub.WEBROOT/config/skipShow/$var['title']/0">Skip show</a></li>
     </ul>
 </div>
 #end for
@@ -157,7 +157,7 @@
 #end if
 
 <td width="50px" align="center">
-	#set $imageurl = "/media/images/" + $var['language'] + ".png"
+	#set $imageurl = $autosub.WEBROOT + "/images/" + $var['language'] + ".png"
 	<img src="$imageurl" alt="$var['language']" />
 </td>
 </tr>

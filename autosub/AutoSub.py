@@ -44,10 +44,12 @@ def daemon():
 def launchBrowser():
     host = autosub.WEBSERVERIP
     port = autosub.WEBSERVERPORT
+    wr = autosub.WEBROOT
     if host == '0.0.0.0':
         host = 'localhost'
 
     url = 'http://%s:%d' % (host, int(port))
+    url = url + autosub.WEBROOT
     try:
         webbrowser.open(url, 2, 1)
     except:
@@ -72,24 +74,36 @@ def start():
                            })
     
     conf = {
-            '/' : {
+            '/': {
             'tools.encode.encoding': 'utf-8',
-            'tools.decode.encoding': 'utf-8'
+            'tools.decode.encoding': 'utf-8',
+            'tools.staticdir.root': os.path.join(autosub.PATH, 'interface/media/'),
             },
-            '/media':{
+            '/css':{
             'tools.staticdir.on': True,
-            'tools.staticdir.root': os.path.join(autosub.PATH, 'interface/'),
-            'tools.staticdir.dir': "media",
+            'tools.staticdir.dir': "css",
             'tools.expires.on': True,
             'tools.expires.secs': 3600 * 24 * 7
-        },
+            },
+            '/images':{
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': "images",
+            'tools.expires.on': True,
+            'tools.expires.secs': 3600 * 24 * 7
+            },
+            '/scripts':{
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': "scripts",
+            'tools.expires.on': True,
+            'tools.expires.secs': 3600 * 24 * 7
+            },
             '/favicon.ico':{
             'tools.staticfile.on' : True,
             'tools.staticfile.filename' : os.path.join(autosub.PATH, 'interface/media/images/favicon.ico')
-        }    
+            }    
         }
     
-    cherrypy.tree.mount(autosub.WebServer.WebServerInit(),config = conf)
+    cherrypy.tree.mount(autosub.WebServer.WebServerInit(),autosub.WEBROOT, config = conf)
     log.info("AutoSub: Starting CherryPy webserver")
 
     # TODO: Let CherryPy log do another log file and not to screen

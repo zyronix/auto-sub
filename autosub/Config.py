@@ -227,10 +227,12 @@ def ReadConfig(configfile):
         if cfg.has_option('webserver', 'webserverip') and cfg.has_option('webserver', 'webserverport'):
             autosub.WEBSERVERIP = cfg.get('webserver', 'webserverip')
             autosub.WEBSERVERPORT = int(cfg.get('webserver', 'webserverport'))
+            autosub.WEBROOT = cfg.get('webserver', 'webroot')
         else:
             print "Config ERROR: Webserver IP and port are required! Now setting the default values (0.0.0.0:8083)."
             autosub.WEBSERVERIP = u"0.0.0.0"
             autosub.WEBSERVERPORT = 8083
+            autosub.WEBROOT = '/'
         if cfg.has_option('webserver', 'username') and cfg.has_option('webserver', 'password'):
             autosub.USERNAME = cfg.get('webserver', 'username')
             autosub.PASSWORD = cfg.get('webserver', 'password')
@@ -241,6 +243,7 @@ def ReadConfig(configfile):
         print "Config WARNING: The webserver is started without authentication!"
         autosub.WEBSERVERIP = u'0.0.0.0'
         autosub.WEBSERVERPORT = 8083
+	autosub.WEBROOT = '/'
 
     if cfg.has_section('skipshow'):
         # Try to read skipshow section in the config
@@ -728,6 +731,7 @@ def saveWebserverSection():
     cfg.set(section, 'webserverport', str(autosub.WEBSERVERPORT))
     cfg.set(section, "username", autosub.USERNAME)
     cfg.set(section, "password", autosub.PASSWORD)
+    cfg.set(section, "webroot", autosub.WEBROOT)
 
     with open(autosub.CONFIGFILE, 'wb') as file:
         cfg.write(file)
@@ -856,6 +860,7 @@ def checkForRestart():
     lognum = 1
     webserverip = u'0.0.0.0'
     webserverport = 8083
+    webroot = '/'
     username = u''
     password = u''
 
@@ -913,6 +918,7 @@ def checkForRestart():
         if cfg.has_option('webserver', 'webserverip') and cfg.has_option('webserver', 'webserverport'):
             webserverip = cfg.get('webserver', 'webserverip')
             webserverport = int(cfg.get('webserver', 'webserverport'))
+            webroot = cfg.get('webserver', 'webroot')
         if cfg.has_option('webserver', 'username') and cfg.has_option('webserver', 'password'):
             username = cfg.get('webserver', 'username')
             password = cfg.get('webserver', 'password')
@@ -959,11 +965,11 @@ def WriteConfig():
     if restart:
         # This needs to be replaced by a restart thingy, until then, just re-read the config and tell the users to do a manual restart
         ReadConfig(autosub.CONFIGFILE)
-        return "Config saved. A manual restart is needed for all changes to take effect. Auto restart will be implemented soon!<br><a href='/config'>Return</a>"
+        return "Config saved. A manual restart is needed for all changes to take effect. Auto restart will be implemented soon!<br><a href='" + autosub.WEBROOT + "/config'>Return</a>"
     else:
         # For some reason the needs to be read again, otherwise all pages get an error
         ReadConfig(autosub.CONFIGFILE)
-        return "Config saved.<br><a href='/config'>Return</a>"
+        return "Config saved.<br><a href='" + autosub.WEBROOT + "/config'>Return</a>"
 
 def upgradeConfig(from_version, to_version):
     print "Config: Upgrading config version from %d to %d" %(from_version, to_version)

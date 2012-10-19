@@ -62,6 +62,7 @@ WEBSERVERPORT=None
 LAUNCHBROWSER=True
 USERNAME=None
 PASSWORD=None
+WEBROOT=None
 
 NOTIFYMAIL=None
 MAILSRV=None
@@ -170,5 +171,5 @@ def initLogging(logfile):
         formatter = logging.Formatter('%(asctime)s %(levelname)s  %(message)s')
         console.setFormatter(formatter)
         log.addHandler(console)
-    
+ 
     return log

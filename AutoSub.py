@@ -102,7 +102,7 @@ def main(argv=None):
         print "AutoSub: ERROR PATH does not exist, check config."
         os._exit(1)
     
-    print "AutoSub: Changing output to log. Bye!"
+    print "AutoSub: Starting output to log. Bye!"
     log = autosub.initLogging(autosub.LOGFILE)
     log.debug("AutoSub: Systemencoding is: %s" %autosub.SYSENCODING)
     log.debug("AutoSub: Configversion is: %d" %autosub.CONFIGVERSION)
