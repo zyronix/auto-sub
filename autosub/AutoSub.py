@@ -49,7 +49,7 @@ def launchBrowser():
         host = 'localhost'
 
     url = 'http://%s:%d' % (host, int(port))
-    url = url + autosub.WEBROOT
+    url = url + wr
     try:
         webbrowser.open(url, 2, 1)
     except:
