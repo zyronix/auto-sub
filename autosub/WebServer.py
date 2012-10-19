@@ -261,7 +261,7 @@ class Home:
         autosub.DOWNLOADSUBS.runnow = True
         
         tmpl = PageTemplate(file="interface/templates/message.tmpl")
-        tmpl.message = "Running everything! <br> <a href='$autosub.WEBROOT/home'>Return</a>"
+        tmpl.message = "Running everything! <br> <a href='" + autosub.WEBROOT + "/home'>Return</a>"
         return str(tmpl)
     
     @cherrypy.expose
