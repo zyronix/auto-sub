@@ -146,6 +146,10 @@ def ReadConfig(configfile):
             autosub.CONFIGVERSION = int(cfg.get("config", "configversion"))
         else:
             autosub.CONFIGVERSION = 1
+            
+        if cfg.has_option("config", "launchbrowser"):
+            autosub.LAUNCHBROWSER = cfg.getboolean("config", "launchbrowser")
+        
     else:
         # config section is missing
         print "Config ERROR: Config section is missing. This is required, it contains vital options! Using default values instead!"
@@ -682,6 +686,7 @@ def saveConfigSection():
     cfg.set(section, "logfile", autosub.LOGFILE)
     cfg.set(section, "postprocesscmd", autosub.POSTPROCESSCMD)
     cfg.set(section, "configversion", str(autosub.CONFIGVERSION))
+    cfg.set(section, "launchbrowser", str(autosub.LAUNCHBROWSER))
     
     with codecs.open(autosub.CONFIGFILE, 'wb', encoding=autosub.SYSENCODING) as file:
         cfg.write(file)

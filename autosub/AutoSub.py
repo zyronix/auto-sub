@@ -2,7 +2,6 @@ import autosub.Scheduler
 import autosub.scanDisk
 import autosub.checkRss
 import autosub.checkSub
-import autosub.downloadSubs
 import autosub.WebServer
 
 import logging
@@ -142,12 +141,6 @@ def start():
     autosub.CHECKSUB.thread.start()
     log.info("AutoSub: checkSub thread started")
 
-    log.info("AutoSub: Starting downloadSubs thread")
-    autosub.DOWNLOADSUBS = autosub.Scheduler.Scheduler(autosub.downloadSubs.downloadSubs(), autosub.SCHEDULERDOWNLOADSUBS, True, "DOWNLOADSUBS")
-    autosub.DOWNLOADSUBS.thread.start()
-    log.info("AutoSub: downloadSubs thread started")
-
-
 def stop():
     log.info("AutoSub: Stopping scanDisk thread")
     autosub.SCANDISK.stop = True
@@ -160,10 +153,6 @@ def stop():
     log.info("AutoSub: Stopping checkSub thread")
     autosub.CHECKSUB.stop = True
     autosub.CHECKSUB.thread.join(10)
-
-    log.info("AutoSub: Stopping downloadSubs thread")
-    autosub.DOWNLOADSUBS.stop = True
-    autosub.DOWNLOADSUBS.thread.join(10)
 
     cherrypy.engine.exit()
 

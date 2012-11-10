@@ -13,22 +13,21 @@ from library.beautifulsoup import BeautifulStoneSoup
 import autosub.Helpers
 from autosub.Bierdopje import API
 from autosub.ProcessFilename import ProcessFilename
-
+from autosub.downloadSubs import DownloadSub
 log = logging.getLogger('thelogger')
 
 class checkRss():
     """
     Check the RSS feed for subtitles of episodes that are in the WANTEDQUEUE.
-    If the subtitles are found, they are added to the TODOWNLOADQUEUE
+    If the subtitles are found, DownloadSub is called
     """
     def run(self):    
         log.debug("checkRSS: Starting round of RSS checking")
 
-        if autosub.TODOWNLOADQUEUELOCK or autosub.WANTEDQUEUELOCK:
+        if autosub.WANTEDQUEUELOCK:
             log.debug("checkRSS: Exiting, another threat is using the queues")
             return False
         else:
-            autosub.TODOWNLOADQUEUELOCK = True
             autosub.WANTEDQUEUELOCK = True
 
         toDelete_wantedQueue = []
@@ -56,7 +55,6 @@ class checkRss():
                 bierdopjeapi.close()
             except:
                 log.error("checkRss: The server returned an error for request %s" % RSSURL)
-                autosub.TODOWNLOADQUEUELOCK = False
                 autosub.WANTEDQUEUELOCK = False
                 continue
             
@@ -161,12 +159,12 @@ class checkRss():
                                 srtfile = os.path.join(originalfile[:-4] + ".srt")
                             wantedItem['downloadLink'] = downloadLink
                             wantedItem['destinationFileLocationOnDisk'] = srtfile
-                            log.info("checkRSS: The episode %s - Season %s Episode %s has a matching subtitle on the RSSFeed, adding to toDownloadQueue" % (wantedItemtitle, wantedItemseason, wantedItemepisode))
+                            log.info("checkRSS: The episode %s - Season %s Episode %s has a matching subtitle on the RSSFeed, downloading it!" % (wantedItemtitle, wantedItemseason, wantedItemepisode))
                             
                             downloadItem = wantedItem.copy()
                             downloadItem['downlang'] = lang
                             downloadItem['subtitle'] = normalizedRssTitlerssfile
-                            autosub.TODOWNLOADQUEUE.append(downloadItem)
+                            DownloadSub(downloadItem)
                             
                             if lang == 'nl' and (autosub.FALLBACKTOENG and not autosub.DOWNLOADENG) and 'en' in wantedItem['lang']:
                                 log.debug('checkRss: We found a dutch subtitle and fallback is true. Removing the english subtitle from the wantedlist.')
@@ -189,6 +187,5 @@ class checkRss():
             toDelete_wantedQueue =[]
     
         log.debug("checkRSS: Finished round of RSS checking")
-        autosub.TODOWNLOADQUEUELOCK = False
         autosub.WANTEDQUEUELOCK = False
         return True
