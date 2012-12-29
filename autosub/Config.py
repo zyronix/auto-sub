@@ -269,7 +269,7 @@ def ReadConfig(configfile):
         autosub.USERNAMEMAPPINGUPPER = {}
 
     if cfg.has_section('notify'):
-			#Mail
+            #Mail
             if cfg.has_option('notify', 'notifymail'):
                 autosub.NOTIFYMAIL = cfg.getboolean('notify', 'notifymail')
             else:
@@ -315,7 +315,7 @@ def ReadConfig(configfile):
             else:
                 autosub.MAILAUTH = u""
        
-			#Growl
+            #Growl
             if cfg.has_option('notify', 'notifygrowl'):
                 autosub.NOTIFYGROWL = cfg.getboolean('notify', 'notifygrowl')
             else:
@@ -336,7 +336,7 @@ def ReadConfig(configfile):
             else:
                 autosub.GROWLPASS = u"mysecretpassword"
 
-			#Twitter
+            #Twitter
             if cfg.has_option('notify', 'notifytwitter'):
                 autosub.NOTIFYTWITTER = cfg.getboolean('notify', 'notifytwitter')
             else:
@@ -352,7 +352,7 @@ def ReadConfig(configfile):
             else:
                 autosub.TWITTERSECRET = u"token secret"
 
-			#Notify My Android
+            #Notify My Android
             if cfg.has_option('notify', 'notifynma'):
                 autosub.NOTIFYNMA = cfg.getboolean('notify', 'notifynma')
             else:
@@ -407,10 +407,12 @@ def ReadConfig(configfile):
         autosub.NOTIFYTWITTER = False
         autosub.TWITTERKEY = u"token key"
         autosub.TWITTERSECRET = u"token secret"
+        autosub.NOTIFYNMWP = False
         autosub.NOTIFYNMA = False
         autosub.NMAAPI = u"API key"
         autosub.NMWPAPI = u"API key"
         autosub.PROWLAPI = u"API key"
+        autosub.NOTIFYPROWL = False
 
     if cfg.has_section('dev'):
         if cfg.has_option('dev', 'apikey'):
